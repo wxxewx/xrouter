@@ -1,0 +1,14 @@
+targets:
+  $default:
+    builders:
+      demo|resource_metadata_other:
+        enabled: true
+
+builders:
+  resource_metadata_other:
+    import: "package:router/router_builder.dart"
+    builder_factories: ["mybuilder"]
+    build_extensions: {".dart": [".g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
