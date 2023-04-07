@@ -9,11 +9,12 @@ import 'package:source_gen/source_gen.dart';
 import 'annotation.dart';
 
 class RouterGenerator extends GeneratorForAnnotation<XRouterConfig> {
+  final List<ClassElement> classes = [];
+
   @override
   FutureOr<String?> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async {
-    final List<ClassElement> classes =
-        await _getAnnotatedClasses(element.library);
+    classes.addAll(await _getAnnotatedClasses(element.library));
 
     final StringBuffer buffer = StringBuffer();
     final StringBuffer importBuffer = StringBuffer();
@@ -52,7 +53,8 @@ class RouterGenerator extends GeneratorForAnnotation<XRouterConfig> {
       if (element.constructors.length == 0) {
         throw Exception("page ${element.name} has no constructor");
       }
-
+      methodBuffer.writeln(
+          '/*-------------------------------------${element.name}----------------------------------*/');
       showCates.forEach((showCate) {
         var cate = ShowCate.Page;
         var cateName = "Page";
@@ -142,6 +144,7 @@ class RouterGenerator extends GeneratorForAnnotation<XRouterConfig> {
     ));
   }''');
         }
+        methodBuffer.writeln('\n');
       });
     }
 

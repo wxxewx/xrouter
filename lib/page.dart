@@ -9,6 +9,10 @@ class MainPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+            Text(
+              "TestPage",
+              style: TextStyle(fontSize: 18),
+            ),
             TextButton(
                 onPressed: () {
                   XRouter.openTestPage(context);
@@ -22,6 +26,28 @@ class MainPage extends StatelessWidget {
             TextButton(
                 onPressed: () {
                   XRouter.openTestBottomSheet(context);
+                },
+                child: Text("bottomSheet")),
+            SizedBox(
+              height: 50,
+            ),
+            Text(
+              "TestPage2",
+              style: TextStyle(fontSize: 18),
+            ),
+            TextButton(
+                onPressed: () {
+                  XRouter.openTest2Page(context, "Page");
+                },
+                child: Text("Page")),
+            TextButton(
+                onPressed: () {
+                  XRouter.openTest2Dialog(context, "Dialog");
+                },
+                child: Text("Dialog")),
+            TextButton(
+                onPressed: () {
+                  XRouter.openTest2BottomSheet(context, "bottomSheet");
                 },
                 child: Text("bottomSheet")),
           ],
