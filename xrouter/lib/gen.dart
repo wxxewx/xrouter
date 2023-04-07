@@ -8,7 +8,7 @@ import 'package:source_gen/source_gen.dart';
 
 import 'annotation.dart';
 
-class SecondGenerator extends GeneratorForAnnotation<XRouter> {
+class RouterGenerator extends GeneratorForAnnotation<XRouter> {
   @override
   FutureOr<String?> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async {
