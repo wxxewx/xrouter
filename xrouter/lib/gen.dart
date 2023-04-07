@@ -8,7 +8,7 @@ import 'package:source_gen/source_gen.dart';
 
 import 'annotation.dart';
 
-class RouterGenerator extends GeneratorForAnnotation<XRouter> {
+class RouterGenerator extends GeneratorForAnnotation<XRouterConfig> {
   @override
   FutureOr<String?> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async {
@@ -29,8 +29,8 @@ class RouterGenerator extends GeneratorForAnnotation<XRouter> {
         continue;
       }
       // 获取 GenerateToFile 注解对象
-      final annotation =
-          const TypeChecker.fromRuntime(XRouter).firstAnnotationOf(element);
+      final annotation = const TypeChecker.fromRuntime(XRouterConfig)
+          .firstAnnotationOf(element);
       if (annotation == null) {
         continue;
       }
@@ -115,17 +115,17 @@ class RouterGenerator extends GeneratorForAnnotation<XRouter> {
             : "CupertinoPageRoute";
         if (cate == ShowCate.Dialog) {
           methodBuffer.writeln('''
-  Future open${pageName}$cateName(BuildContext context${methonParams != "" ? ',$methonParams' : ""}) {
+  static Future open${pageName}$cateName(BuildContext context${methonParams != "" ? ',$methonParams' : ""}) {
     return show${theme.contains("Material") ? "" : "Cupertino"}Dialog(
         context: context,
-        builder: (context) => ${element.name}(${methonParams2}),
+        builder: (context) => Dialog(child:${element.name}(${methonParams2})),
         routeSettings: RouteSettings(name: ${name}_path),
             );
   }''');
         }
         if (cate == ShowCate.BottomSheet) {
           methodBuffer.writeln('''
-  Future open${pageName}$cateName(BuildContext context${methonParams != "" ? ',$methonParams' : ""}) {
+  static Future open${pageName}$cateName(BuildContext context${methonParams != "" ? ',$methonParams' : ""}) {
     return showModalBottomSheet(
       context: context,
       builder: (context) => ${element.name}(${methonParams2}),
@@ -135,7 +135,7 @@ class RouterGenerator extends GeneratorForAnnotation<XRouter> {
         }
         if (cate == ShowCate.Page) {
           methodBuffer.writeln('''
-  Future open${pageName}$cateName(BuildContext context${methonParams != "" ? ',$methonParams' : ""}) {
+  static Future open${pageName}$cateName(BuildContext context${methonParams != "" ? ',$methonParams' : ""}) {
     return Navigator.of(context).push($routerCateName(
       builder: (context) => ${element.name}(${methonParams2}),
       settings: RouteSettings(name: ${name}_path),
@@ -144,14 +144,20 @@ class RouterGenerator extends GeneratorForAnnotation<XRouter> {
         }
       });
     }
-    var dir = Directory("lib//router/");
+
+    methodBuffer.writeln('''
+  static back(BuildContext context) {
+    Navigator.pop(context);
+  }''');
+
+    var dir = Directory("lib//xrouter/");
     if (!dir.existsSync()) {
       dir.createSync(recursive: true);
     }
-    final file = File('lib/router/router.dart'); // 文件路径
+    final file = File('lib/xrouter/x_router.dart'); // 文件路径
     buffer.writeln(importBuffer.toString());
     buffer.writeln("\n");
-    buffer.writeln("class Router {");
+    buffer.writeln("class XRouter {");
     buffer.writeln(variablesBuffer.toString());
     buffer.writeln("\n");
     buffer.writeln(methodBuffer.toString());
@@ -177,7 +183,7 @@ class _GenerateToFileVisitor extends RecursiveElementVisitor<Null> {
   Null visitClassElement(ClassElement element) {
     final annotation = element.metadata
         .map((m) => m.computeConstantValue())
-        .whereType<XRouter>()
+        .whereType<XRouterConfig>()
         .map((obj) => obj); // 进行类型转换
 
     if (annotation != null) {

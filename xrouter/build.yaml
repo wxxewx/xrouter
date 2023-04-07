@@ -6,7 +6,7 @@ targets:
 
 builders:
   resource_metadata_other:
-    import: "package:router/router_builder.dart"
+    import: "package:xrouter/router_builder.dart"
     builder_factories: ["routerBuilder"]
     build_extensions: {".dart": [".g.part"]}
     auto_apply: dependents
