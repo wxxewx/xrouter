@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:router/annotation.dart';
+import 'package:xrouter/annotation.dart';
 
 @XRouter('main', '/main_page',
     theme: RouterTheme.Material,

@@ -37,8 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   build_runner: ^2.3.3
-  router:
-    path: ./router
+  xrouter:
+    path: ./xrouter
 
 dev_dependencies:
   flutter_test:
