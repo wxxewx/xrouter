@@ -43,8 +43,8 @@ class SecondGenerator extends GeneratorForAnnotation<XRouter> {
       String packagePath = element.library.source.uri.toString();
       importBuffer.writeln("import '$packagePath';");
 
-      variablesBuffer
-          .writeln('static String  ${name}_page = \'$path\'; // $description');
+      variablesBuffer.writeln(
+          '  static String  ${name}_path = \'$path\'; // $description');
 
       if (element.constructors.length > 1) {
         throw Exception("page ${element.name} has more than one constructor");
@@ -119,7 +119,7 @@ class SecondGenerator extends GeneratorForAnnotation<XRouter> {
     return show${theme.contains("Material") ? "" : "Cupertino"}Dialog(
         context: context,
         builder: (context) => ${element.name}(${methonParams2}),
-        routeSettings: RouteSettings(name: ${name}_page),
+        routeSettings: RouteSettings(name: ${name}_path),
             );
   }''');
         }
@@ -129,7 +129,7 @@ class SecondGenerator extends GeneratorForAnnotation<XRouter> {
     return showModalBottomSheet(
       context: context,
       builder: (context) => ${element.name}(${methonParams2}),
-      routeSettings: RouteSettings(name: ${name}_page),
+      routeSettings: RouteSettings(name: ${name}_path),
     );
   }''');
         }
@@ -138,7 +138,7 @@ class SecondGenerator extends GeneratorForAnnotation<XRouter> {
   Future open${pageName}$cateName(BuildContext context${methonParams != "" ? ',$methonParams' : ""}) {
     return Navigator.of(context).push($routerCateName(
       builder: (context) => ${element.name}(${methonParams2}),
-      settings: RouteSettings(name: ${name}_page),
+      settings: RouteSettings(name: ${name}_path),
     ));
   }''');
         }

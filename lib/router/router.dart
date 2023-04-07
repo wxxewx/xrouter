@@ -1,34 +1,29 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:bestrouter/page.dart';
-
-
+import 'package:flutter/material.dart';
 
 class Router {
-static String  main_page = '/main_page'; // 
-
-
+  static String main_path = '/main_page';
 
   Future openMainPage(BuildContext context) {
     return Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => MainPage(),
-      settings: RouteSettings(name: main_page),
+      settings: RouteSettings(name: main_path),
     ));
   }
+
   Future openMainDialog(BuildContext context) {
     return showDialog(
-        context: context,
-        builder: (context) => MainPage(),
-        routeSettings: RouteSettings(name: main_page),
-            );
+      context: context,
+      builder: (context) => MainPage(),
+      routeSettings: RouteSettings(name: main_path),
+    );
   }
+
   Future openMainBottomSheet(BuildContext context) {
     return showModalBottomSheet(
       context: context,
       builder: (context) => MainPage(),
-      routeSettings: RouteSettings(name: main_page),
+      routeSettings: RouteSettings(name: main_path),
     );
   }
-
 }
